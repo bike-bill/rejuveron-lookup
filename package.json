@@ -1,18 +1,20 @@
 {
-  "name": "rejuveron-lookup",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "keywords": [],
   "author": "William Sandner <william@otticode.com>",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
+    "next": "latest",
+    "nextjs-basic-auth": "^0.1.3",
+    "nsrestlet": "^2.0.1",
+    "react": "17.0.2",
+    "react-app-protect": "^1.0.8",
+    "react-dom": "17.0.2"
   }
 }
