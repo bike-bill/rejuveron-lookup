@@ -52,7 +52,7 @@ function Vendors({ data }) {
         </h1>
       
 
-        <p>Type all or part of the supplier's name check if it already exists in our database.</p>
+        <p>Type all or part of the supplier's name to check if it already exists in our database.</p>
         <input type="search" value={searchState} onChange={e => setSearchState(e.target.value)} />
         <ul>
           {filteredVendors.length > 0 ?
