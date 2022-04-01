@@ -1,26 +1,29 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 import Head from 'next/head'
 import { useState, useMemo } from 'react' 
 import initializeBasicAuth from 'nextjs-basic-auth'
+import Image from 'next/image'
 
 const nsrestlet = require('nsrestlet')
 const util = require('util')
 
 const users = [
-  {user: process.env.USERNAME, password: process.env.PASSWORD}
+  {user: process.env.LU_USERNAME, password: process.env.LU_PASSWORD}
 ]
 const basicAuthCheck = initializeBasicAuth({
   users: users
 })
 
 var accountSettings = {
-  accountId: process.env.ACCOUNT_ID,
-  tokenKey: process.env.TOKEN_KEY,
-  tokenSecret: process.env.TOKEN_SECRET,
-  consumerKey: process.env.CONSUMER_KEY,
-  consumerSecret: process.env.CONSUMER_SECRET
+  accountId: process.env.LU_ACCOUNT_ID,
+  tokenKey: process.env.LU_TOKEN_KEY,
+  tokenSecret: process.env.LU_TOKEN_SECRET,
+  consumerKey: process.env.LU_CONSUMER_KEY,
+  consumerSecret: process.env.LU_CONSUMER_SECRET
 }
 var urlSettings = {
-    url: process.env.URL
+    url: process.env.LU_URL
 }
 var myQL = nsrestlet.createLink(accountSettings, urlSettings)
 
@@ -50,15 +53,13 @@ function Vendors({ data }) {
         <h1 className="title">
           Supplier List
         </h1>
-      
-
-        <p>Type all or part of the supplier's name to check if it already exists in our database.</p>
+        <p>Type all or part of the supplier&apos;s name to check if it already exists in our database.</p>
         <input type="search" value={searchState} onChange={e => setSearchState(e.target.value)} />
         <ul>
           {filteredVendors.length > 0 ?
             (filteredVendors && filteredVendors.map(item => (
               <li key={item.id}>{item.entityid}</li>
-            ))): <div>The vendor does not exist. Click <a href="https://form.typeform.com/to/Mn6hmNT0">this link</a> to request that it be added.</div>
+            ))) : <div>The vendor does not exist. Click <a href={'https://form.typeform.com/to/' + process.env.NEXT_PUBLIC_TYPEFORM_ID}>this link</a> to request that it be added.</div>
           }
           </ul>
       </main>    
@@ -227,11 +228,13 @@ function Vendors({ data }) {
 // This gets called on every request
 export async function getServerSideProps(ctx) {
   const { req, res } = ctx
+  console.log(process.env)
+  // console.log(ctx)
   await basicAuthCheck(req, res)
 
   const myQlPostPromise = util.promisify(myQL.post)
   const results = await myQlPostPromise({ query: 'SELECT id, entityid FROM Vendor ORDER BY entityid' })
-  console.debug(results.rows)
+  // console.debug(results.rows)
   const data = results.rows
   
   return { props: { data } }
