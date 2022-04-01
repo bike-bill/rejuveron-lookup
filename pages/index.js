@@ -6,7 +6,7 @@ const nsrestlet = require('nsrestlet')
 const util = require('util')
 
 const users = [
-  {user: 'rejuveron', password: 'rjwgs18'}
+  {user: process.env.USERNAME, password: process.env.PASSWORD}
 ]
 const basicAuthCheck = initializeBasicAuth({
   users: users
